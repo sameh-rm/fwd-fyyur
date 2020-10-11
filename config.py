@@ -8,7 +8,7 @@ DEBUG = True
 
 # Connect to the database
 username = "postgres"
-password = "Sameh416"
+password = ""
 host = "localhost"
 port = 5432
 dbname = "fyyur"
