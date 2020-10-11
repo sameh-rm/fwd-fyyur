@@ -1,0 +1,11 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Show Search{% endblock %}
+{% block content %}
+
+<h1>Are you sure you want to delete <strong class="text-danger">{{show.artist.name}}</strong> from shows</h1>
+<a class="btn btn-primary" href="{{url_for('shows')}}">Cancel</a>
+<a class="btn btn-danger" href="{{url_for('confirm_delete_show',show_id=show.id)}}">Delete</a>
+
+{#    Todo implement show search frontend #}
+
+{% endblock %}

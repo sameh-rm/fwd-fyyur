@@ -1,0 +1,19 @@
+{% extends 'layouts/main.html' %} {% block title %}album Search{% endblock %} {%
+block content %}
+
+<h1>
+	Are you sure you want to delete
+	<strong class="text-danger">{{name}}</strong> from Album's
+</h1>
+<a
+	class="btn btn-primary"
+	href="{{url_for('show_artist',artist_id=album.artist_id)}}"
+	>Cancel</a
+>
+<a
+	class="btn btn-danger"
+	href="{{url_for('confirm_delete_album',album_id=album.id)}}"
+	>Delete</a
+>
+
+{# Todo implement album search frontend #} {% endblock %}

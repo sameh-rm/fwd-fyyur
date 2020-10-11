@@ -1,0 +1,99 @@
+.recent-list {
+	border: solid #dde2e7 1px;
+	border-radius: 5px;
+	padding: 1rem;
+	box-shadow: 2px 2px 8px 1px rgba(61, 46, 46, 0.3);
+}
+
+.result-list {
+	position: absolute;
+	left: 0;
+	border: solid #dde2e7 1px;
+	border-radius: 5px;
+	padding: 1rem;
+	box-shadow: 2px 2px 8px 1px rgba(61, 46, 46, 0.3);
+	z-index: 999;
+	background-color: #fff;
+}
+
+.img-container {
+	max-height: 85px;
+	max-width: 110px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0;
+}
+
+.recent-img {
+	min-width: 50px !important;
+	max-height: 85px !important;
+}
+.row {
+	margin: 5px 0;
+}
+.recent-card {
+	padding-bottom: 5px;
+	border-bottom: solid #dde2e7 1px;
+	color: #333;
+}
+
+.calendar {
+	height: 500px;
+}
+.addShowForm {
+	justify-content: center;
+}
+
+.btn-blue {
+	color: #fff;
+	background-color: #4c8bf5;
+	border-color: #4c8bf5;
+}
+
+.primary-color {
+	color: #4c8bf5;
+}
+
+.seeking {
+	width: 100%;
+}
+
+/* album card */
+.album-row {
+	height: 300px;
+}
+.album-card-container {
+	height: 300px;
+	border: solid 1px rgba(61, 46, 46, 0.3);
+	box-shadow: 2px 2px 4px 2px rgba(61, 46, 46, 0.3);
+	border-radius: 5px;
+	height: 0;
+}
+
+.album-card-container:hover {
+	transform: scale(1.01);
+	cursor: pointer;
+}
+
+.album-img-container {
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.songs_list {
+	height: 80%;
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.4);
+	color: #fff;
+	text-align: center;
+}
+
+.songs_list > h4 {
+	border-bottom: solid 1px rgba(255, 255, 255, 0.4);
+	margin: 10px 25px;
+}

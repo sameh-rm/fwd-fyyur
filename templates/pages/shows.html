@@ -1,0 +1,28 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Fyyur | Shows{% endblock %}
+{% block content %}
+<div class="row shows">
+
+    {%for show in shows %}
+    <div class="col-sm-4">
+        <div class="actions"
+            style="display: flex; flex-direction: column; position: absolute; right: 1.7rem; bottom: 2.5rem;">
+            <a href="{{url_for('edit_show',show_id=show.id)}}" class="btn btn-primary">Edit</a>
+            <a href="{{url_for('delete_show',show_id=show.id)}}" class="btn btn-danger"
+                style="margin-top: 1rem;">Delete</a>
+        </div>
+        <div class="tile tile-show">
+            <img src="{{ show.artist_image_link }}" alt="Artist Image" />
+            <h4>{{ show.start_time }}</h4>
+            <h5><a href="/artists/{{ show.artist_id }}">{{ show.artist_name }}</a></h5>
+            <p>playing at</p>
+            <h5><a href="/venues/{{ show.venue_id }}">{{ show.venue_name }}</a></h5>
+
+        </div>
+
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+SELECT distinct(show.id) AS show_id, show.start_date AS show_start_date, show.artist_id AS show_artist_id, show.venue_id
+AS show_venue_id FROM show, artist, venue WHERE lower(artist.name) LIKE '%ga%' OR lower(venue.name) LIKE '%s%';
