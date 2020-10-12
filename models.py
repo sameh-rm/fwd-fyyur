@@ -17,7 +17,25 @@ genres = db.Table(
 )
 
 
-class Album(db.Model):
+class Base(db.Model):
+    __abstract__ = True
+
+    @classmethod
+    def get_ordered_choices(cls, ordered_by):
+        """
+        returns an ordered list tuples of (id,name)
+        """
+        return cls.query.order_by(ordered_by).with_entities(cls.id, cls.name)
+
+    @classmethod
+    def get_choices(cls):
+        """
+        returns a list tuples of (id,name)
+        """
+        return cls.query.with_entities(cls.id, cls.name)
+
+
+class Album(Base):
     __tablename__ = "album"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -25,23 +43,22 @@ class Album(db.Model):
     image_link = db.Column(db.String(500), nullable=False)
     year = db.Column(db.Integer)
     songs = db.relationship(
-        'Song', backref=db.backref("album", lazy='joined'))
+        'Song', cascade="all,delete", backref=backref("album", lazy="select"), lazy='dynamic')
     artist_id = db.Column(db.Integer, db.ForeignKey("artist.id"))
 
     def __repr__(self):
         return f"{self.id} {self.name} {self.year} {self.artist_id}"
 
 
-class Song(db.Model):
+class Song(Base):
     __tablename__ = "song"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False, unique=True)
-    # we might add an individual song
-    album_id = db.Column(db.Integer, db.ForeignKey('album.id'), nullable=True)
+    album_id = db.Column(db.Integer, db.ForeignKey('album.id'))
     artist_id = db.Column(db.Integer, db.ForeignKey('artist.id'))
 
 
-class Venue(db.Model):
+class Venue(Base):
     __tablename__ = 'venue'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -54,19 +71,19 @@ class Venue(db.Model):
     facebook_link = db.Column(db.String(120))
 
     # TODO: implement any missing fields, as a database migration using Flask-Migrate
-    genres = db.relationship('Genre', secondary=genres,
-                             backref=db.backref("venues"))
+    genres = db.relationship('Genre', cascade="all,delete", secondary=genres,
+                             backref=db.backref("venues", lazy="select"), lazy="dynamic")
     website = db.Column(db.String(120))
     seeking_talent = db.Column(db.Boolean(), default=False)
     seeking_description = db.Column(db.String(120))
     shows = db.relationship(
-        'Show', backref=db.backref("venue", lazy='joined'))
+        'Show', cascade="all,delete", backref=db.backref("venue", lazy="select"), lazy='dynamic')
 
     def __repr__(self):
         return f"<Venue {self.id} {self.name} {self.city} {self.state} {self.phone} {self.genres} {self.seeking_talent} {self.seeking_description}/>"
 
 
-class Artist(db.Model):
+class Artist(Base):
     __tablename__ = 'artist'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -79,24 +96,24 @@ class Artist(db.Model):
 
     # TODO: implement any missing fields, as a database migration using Flask-Migrate
     genres = db.relationship(
-        'Genre', secondary=genres, backref=db.backref("artist"))
+        'Genre', secondary=genres, backref=db.backref("artist", lazy="select"), lazy="dynamic")
     website = db.Column(db.String(120))
     seeking_venue = db.Column(db.Boolean(), default=False)
     seeking_description = db.Column(db.String(120))
     shows = db.relationship(
-        'Show', backref=db.backref("artist", lazy='joined'))
+        'Show', cascade="all,delete", backref=db.backref("artist", lazy="select"), lazy='dynamic')
     albums = db.relationship(
-        "Album", backref=db.backref("artist", lazy="joined")
+        "Album", cascade="all,delete", backref=db.backref("artist", lazy="select"), lazy='dynamic'
     )
     songs = db.relationship(
-        "Song", backref=db.backref("artist", lazy="joined")
+        "Song", cascade="all,delete", backref=db.backref("artist", lazy="select"), lazy='dynamic'
     )
 
     def __repr__(self):
         return f"<Artist {self.id} {self.name} {self.city} {self.state} {self.phone} {self.genres} {self.seeking_venue} {self.seeking_description}/>"
 
 
-class Genre(db.Model):
+class Genre(Base):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
 
@@ -107,7 +124,7 @@ class Genre(db.Model):
         return f"<Genre {self.id} {self.name}/>"
 
 
-class Show (db.Model):
+class Show (Base):
     id = db.Column(db.Integer, primary_key=True)
     start_date = db.Column(db.DateTime)
     end_time = db.Column(db.DateTime)

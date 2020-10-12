@@ -79,8 +79,10 @@ endblock %} {% block content %}
 	</div>
 </div>
 <section>
+	{% if artist.albums.count() > 0 %}
 	<div class="album-row">
 		{% for album in artist.albums %}
+
 		<a
 			id="{{album.name}}"
 			class="album-card"
@@ -108,6 +110,7 @@ endblock %} {% block content %}
 		</a>
 		{% endfor %}
 	</div>
+	{% endif %}
 </section>
 <section>
 	<div class="row shows">
@@ -200,9 +203,8 @@ endblock %} {% block content %}
 <script type="text/javascript">
 	$(document).ready(function () {
 		$songsList = $(".songs_list");
-		cards = document.querySelectorAll(".row .album-card");
 		$songsList.hide();
-		songsList = document.querySelectorAll("#songs-list");
+		cards = document.querySelectorAll(".album-row .album-card");
 		cards.forEach((card) => {
 			$(card).hover(
 				function () {
