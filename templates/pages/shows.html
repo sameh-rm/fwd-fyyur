@@ -35,7 +35,4 @@
 	</div>
 	{% endfor %}
 </div>
-{% endblock %} SELECT distinct(show.id) AS show_id, show.start_date AS
-show_start_date, show.artist_id AS show_artist_id, show.venue_id AS
-show_venue_id FROM show, artist, venue WHERE lower(artist.name) LIKE '%ga%' OR
-lower(venue.name) LIKE '%s%';
+{% endblock %}

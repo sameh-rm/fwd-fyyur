@@ -8,10 +8,9 @@ DEBUG = True
 
 # Connect to the database
 username = "postgres"
-password = ""
+password = "Sameh416"
 host = "localhost"
 port = 5432
 dbname = "fyyur"
 # TODO IMPLEMENT DATABASE URL
 SQLALCHEMY_DATABASE_URI = f'postgresql://{username}:{password}@{host}:{port}/{dbname}'
-DEBUG_TB_INTERCEPT_REDIRECTS = False

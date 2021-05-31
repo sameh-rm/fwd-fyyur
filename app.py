@@ -6,7 +6,7 @@ import json
 from models import Album, Song
 from operator import or_
 from forms import *
-from flask import render_template, request, flash, redirect, url_for
+from flask import (render_template, request, flash, redirect, url_for)
 
 import dateutil.parser
 import babel
@@ -70,14 +70,15 @@ def venues():
     areas = Venue.query.with_entities(
         Venue.city.distinct(), Venue.state).all()
     data = []
-
-    for a in areas:
+    print(areas)
+    for city, state in areas:
         area = {
-            "city": a[0],
-            "state": a[1],
-            "venues": Venue.query.filter_by(state=a[1], city=a[0])
+            "city": city,
+            "state": state,
+            "venues": Venue.query.filter_by(city=city, state=state)
         }
         data.append(area)
+    print(data)
     return render_template('pages/venues.html', areas=data)
 
 
@@ -662,7 +663,6 @@ def shows():
         "start_time": show.start_date,
         "id": show.id
     }, Show.query.limit(9).all())
-
     return render_template('pages/shows.html', shows=data)
 
 
@@ -905,7 +905,7 @@ if not app.debug:
 
 # Default port:
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,port=8000)
 
 # Or specify port manually:
 '''
